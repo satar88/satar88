@@ -1,0 +1,177 @@
+a)	Write a C program that accepts the vertices and edges of a graph and stores it as an adjacency matrix. Display the adjacency matrix.
+ 
+Solution: 
+
+#include<stdio.h>
+void main()
+{
+    int AdjMat[10][10], n;
+    printf("\nEnter Number of Vertices\n");
+    scanf("%d", &n);
+    read_graph(AdjMat, n);
+    printf("\n Given Adjacency Matrix is:\n");
+    display(AdjMat, n);
+}
+void display(int AdjMat[20][20],int n)
+{
+    int i, j;
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            printf("%d\t", AdjMat[i][j]);
+        }
+        printf("\n");
+    }
+}
+void read_graph(int AdjMat[20][20],int n)
+{
+    int i, j;
+    char reply;
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            if(i==j)
+                AdjMat[i][j]=0;
+            else
+            {
+                printf("\n Vertices %d and %d are Adjacent?(Y||N)\n", i, j);
+                fflush(stdin);
+                scanf("%c", &reply);
+                if(reply=='y'||reply=='Y')
+                    AdjMat[i][j]=1;
+                else
+                    AdjMat[i][j]=0;
+            }
+        }
+    }
+}
+
+
+
+b) Write a C program that accepts the vertices and edges of a graph and store it as an adjacency matrix. Implement functions to print indegree, outdegree and total degree of all vertices of graph.
+ 
+Solution:
+#include<stdio.h>
+void main()
+{
+    int indegree, outdegree, total, i, j;
+    int AdjMat[10][10], n;
+    printf("\nEnter Number of Vertices\n");
+    scanf("%d", &n);
+    read_graph(AdjMat, n);
+    printf("\n Given Adjacency Matrix is:\n");
+    display(AdjMat, n);
+    printf("\nIndegree of All Vertices");
+    InDegree(AdjMat, n);
+    printf("\nOutdegree of All Vertices");
+    OutDegree(AdjMat, n);
+    printf("\nTotal degree of All Vertices");
+    TotalDegree(AdjMat, n);
+/*    printf("\n\nV\tInD\tOutD\tTotal\n");
+    for(i=1;i<=n;i++)
+    {
+        indegree=0;
+        outdegree=0;
+        for(j=1;j<=n;j++)
+        {
+            if(AdjMat[i][j]!=0)
+                indegree++;
+        }
+        for(j=1;j<=n;j++)
+        {
+            if(AdjMat[j][i]!=0)
+                outdegree++;
+        }
+        printf("\n%d\t%d\t%d\t%d\t", i,indegree, outdegree,indegree+outdegree);
+    }*/
+}
+void InDegree(int AdjMat[20][20],int n)
+{
+    int i, j, indeg=0;
+    printf("\n\nV\tInD\n");
+    for(i=1;i<=n;i++)
+    {
+        indeg=0;
+        for(j=1;j<=n;j++)
+        {
+            if(AdjMat[j][i]!=0)
+                indeg++;
+        }
+        printf("\n%d\t%d", i,indeg);
+    }
+}
+void OutDegree(int AdjMat[20][20],int n)
+{
+    int i, j, outdeg=0;
+    printf("\n\nV\tOutD\n");
+    for(i=1;i<=n;i++)
+    {
+        outdeg=0;
+        for(j=1;j<=n;j++)
+        {
+            if(AdjMat[i][j]!=0)
+                outdeg++;
+        }
+        printf("\n%d\t%d", i,outdeg);
+    }
+}
+void TotalDegree(int AdjMat[20][20],int n)
+{
+    int i, j, total=0;
+    printf("\n\nV\tTotalD\n");
+    for(i=1;i<=n;i++)
+    {
+        total=0;
+        for(j=1;j<=n;j++)
+        {
+            if(AdjMat[j][i]!=0)
+                total++;
+        }
+        for(j=1;j<=n;j++)
+        {
+            if(AdjMat[i][j]!=0)
+                total++;
+        }
+        printf("\n%d\t%d\t", i,total);
+    }
+}
+void display(int AdjMat[20][20],int n)
+{
+    int i, j;
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            printf("%d\t", AdjMat[i][j]);
+        }
+        printf("\n");
+    }
+}
+void read_graph(int AdjMat[20][20],int n)
+{
+    int i, j;
+    char reply;
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            if(i==j)
+                AdjMat[i][j]=0;
+            else
+            {
+                printf("\n Vertices %d and %d are Adjacent?(Y||N)\n", i, j);
+                fflush(stdin);
+                scanf("%c", &reply);
+                if(reply=='y'||reply=='Y')
+                    AdjMat[i][j]=1;
+                else
+                    AdjMat[i][j]=0;
+            }
+        }
+    }
+}
+
+
+
