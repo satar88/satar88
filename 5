@@ -1,0 +1,232 @@
+a) Write a C program that accepts the vertices and edges of a graph. Create adjacency list and display the adjacency list.
+ 
+Solution:
+
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+    int vertex;
+    struct node *next;
+};
+void main()
+{
+    int n;
+    printf("\nEnter Number of Vertices\n");
+    scanf("%d", &n);
+    read_graph(n);
+}
+void read_graph(int n)
+{
+    int i, j;
+    char reply;
+    struct node *AdjList[10];
+    struct node *newnode, *temp;
+    for(i=1;i<=n;i++)
+    {
+        AdjList[i]=NULL;
+    }
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            if(i!=j)
+            {
+            printf("\n Vertices %d and %d are Adjacent?(Y||N)\n", i, j);
+            fflush(stdin);
+            scanf("%c", &reply);
+            if(reply=='y'||reply=='Y')
+            {
+                newnode=(struct node*)malloc(sizeof(struct node));
+                newnode->vertex=j;
+                newnode->next=NULL;
+                if(AdjList[i]==NULL)
+                {
+                    AdjList[i]=newnode;
+                }
+                else
+                {
+                    temp=AdjList[i];
+                    while(temp->next!=NULL)
+                    {
+                        temp=temp->next;
+                    }
+                    temp->next=newnode;
+                }
+               
+            }
+            }
+        }
+    }
+    display(AdjList, n);
+}
+void display(struct node *AdjList[10], int n)
+{
+    int i;
+    struct node *temp;
+    printf("Vertex\tList\n");
+    for(i=1; i<=n;i++)
+    {
+        temp=AdjList[i];
+        printf("%d\t", i);
+        while(temp!=NULL)
+        {
+            printf("%d->",temp->vertex);
+            temp=temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+
+
+b) Write a C program that accepts the vertices and edges of a graph. Create adjacency list. Implement functions to print indegree, outdegree and total degree of all vertex of graph.
+ 
+Solution:
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{
+    int vertex;
+    struct node *next;
+};
+void main()
+{
+    int n;
+    struct node *AdjList[10];
+    printf("\nEnter Number of Vertices\n");
+    scanf("%d", &n);
+    read_graph(&AdjList, n);
+    printf("\nIndegree of All Vertices");
+    InDegree(&AdjList, n);
+    printf("\nOutdegree of All Vertices");
+    OutDegree(&AdjList, n);
+    printf("\nTotal degree of All Vertices");
+    TotalDegree(&AdjList, n);
+}
+void read_graph(struct node *AdjList[10], int n)
+{
+    int i, j;
+    char reply;
+//    struct node *AdjList[10];
+    struct node *newnode, *temp;
+    for(i=1;i<=n;i++)
+    {
+        AdjList[i]=NULL;
+    }
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            if(i!=j)
+            {
+            printf("\n Vertices %d and %d are Adjacent?(Y||N)\n", i, j);
+            fflush(stdin);
+            scanf("%c", &reply);
+            if(reply=='y'||reply=='Y')
+            {
+                newnode=(struct node*)malloc(sizeof(struct node));
+                newnode->vertex=j;
+                newnode->next=NULL;
+                if(AdjList[i]==NULL)
+                {
+                    AdjList[i]=newnode;
+                }
+                else
+                {
+                    temp=AdjList[i];
+                    while(temp->next!=NULL)
+                    {
+                        temp=temp->next;
+                    }
+                    temp->next=newnode;
+                }
+               
+            }
+            }
+        }
+    }
+    display(AdjList, n);
+}
+void display(struct node *AdjList[10], int n)
+{
+    int i;
+    struct node *temp;
+    printf("Vertex\tList\n");
+    for(i=1; i<=n;i++)
+    {
+        temp=AdjList[i];
+        printf("%d\t", i);
+        while(temp!=NULL)
+        {
+            printf("%d->",temp->vertex);
+            temp=temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+void InDegree(int *AdjList[10],int n)
+{
+    struct node *temp;
+    int i, j, in_deg;
+    printf("\n\nV\tInD\n");
+    for (i = 1; i <= n ; i++ )
+    {
+        in_deg = 0;
+        for ( j = 1 ; j <= n ; j++ )
+        {
+            temp = AdjList[j];
+            while( temp != NULL )
+            {
+                if ( temp -> vertex == i )
+                   in_deg++;
+                temp = temp -> next;
+            }
+        }
+        printf("\n%d\t%d", i,in_deg);
+    }
+}
+void OutDegree(int *AdjList[10],int n)
+{
+    struct node *temp;
+    int i, j, out_deg;
+    printf("\n\nV\tOutD\n");
+    for (i = 1; i <= n ; i++ )
+    {
+        out_deg = 0;
+        temp = AdjList[i];
+        while( temp != NULL )
+        {
+            out_deg++;
+            temp = temp -> next;
+        }
+        printf("\n%d\t%d", i,out_deg);
+    }
+}
+void TotalDegree(int *AdjList[10],int n)
+{
+    int i, j, in_deg,out_deg;
+    struct node *temp;
+    printf("\n\nV\tTotalD\n");
+    for (i = 1; i <= n ; i++ )
+    {
+        in_deg = out_deg = 0;
+        temp = AdjList[i];
+        while( temp != NULL )
+        {
+            in_deg++;
+            temp = temp -> next;
+        }
+        for ( j = 1 ; j <= n ; j++ )
+        {
+            temp = AdjList[j];
+            while( temp != NULL )
+            {
+                if ( temp -> vertex == i )
+                           out_deg++;
+                temp = temp -> next;
+            }
+        }
+        printf("\n\n%d\t%d\n", i, in_deg+out_deg);
+    }
+}
+
